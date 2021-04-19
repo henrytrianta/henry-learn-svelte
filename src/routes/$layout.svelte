@@ -2,21 +2,22 @@
 	/**
 	 * @type {import('@sveltejs/kit').Load}
 	 */
-	export async function load({ fetch }) {
-		const url = `/api/header.json`;
-		const res = await fetch(url);
+	import { loadNav } from '$lib/prismic/prismicClient';
 
-		if (res.ok) {
+	export async function load() {
+		const res = await loadNav();
+
+		if (!res) {
 			return {
-				props: {
-					menus: await res.json()
-				}
+				status: 500,
+				error: new Error(`Could not load Navigation`)
 			};
 		}
 
 		return {
-			status: res.status,
-			error: new Error(`Could not load ${url}`)
+			props: {
+				menus: res
+			}
 		};
 	}
 </script>
@@ -24,44 +25,16 @@
 <script type="ts">
 	export let menus: any;
 
-	// TODO: Strange when it's going to 404, load function is not invoke so static aja. LOL
-	if (!menus) {
-		menus = [
-			{
-				link: '/',
-				title: 'Home'
-			},
-			{
-				link: '/blog',
-				title: 'Blog'
-			},
-			{
-				link: '/uses',
-				title: 'Uses'
-			},
-			{
-				link: '/work',
-				title: 'Work'
-			},
-			{
-				link: '/contact',
-				title: 'Contact'
-			}
-		];
-	}
-
 	// get store menu
-	import { menuOpen } from '$lib/stores/menuStore';
-
+	import menuOpen from '$stores/menuStore';
 	// check theme color in local storage when refresh
-	import { theme } from '$lib/stores/themeStore';
+	import theme from '$stores/themeStore';
 	import { onMount } from 'svelte';
-
+	// styles
+	import '../app.postcss';
 	// component
-	import '../app.scss';
-
-	import Header from '$lib/component/Header.svelte';
-	import Footer from '$lib/component/Footer.svelte';
+	import Header from '$components/Header.svelte';
+	import Footer from '$components/Footer.svelte';
 
 	onMount(() => {
 		if ($theme === 'dark') {
@@ -75,7 +48,7 @@
 		$menuOpen ? 'max-h-screen overflow-hidden relative' : ''
 	}`}
 >
-	<Header {menus} />
+	<svelte:component this={Header} {menus} />
 	<slot />
-	<Footer />
+	<svelte:component this={Footer} />
 </div>

@@ -1,10 +1,11 @@
 <script type="ts">
 	// get store color
-	import { toogleTheme, theme } from '$lib/stores/themeStore';
+	import { toogleTheme, theme } from '$stores/themeStore';
 	// get store menu
-	import { menuOpen, toogleMenuOpen } from '$lib/stores/menuStore';
+	import { menuOpen, toogleMenuOpen } from '$stores/menuStore';
 	// props
-	export let menus: { link: string; title: string }[];
+	export let menus;
+	import DOM from 'prismic-dom';
 </script>
 
 <div class="container mx-auto">
@@ -42,16 +43,16 @@
 		</div>
 		<div class="hidden lg:block">
 			<ul class="flex items-center">
-				{#each menus as { link, title }, i}
+				{#each menus as { link_url, link_title }, i}
 					<li class="relative mb-1 mr-6 group">
 						<div
 							id={`menu-${i}`}
 							class="absolute bottom-0 left-0 z-20 w-full h-0 transition-all opacity-75 group-hover:h-2 group-hover:bg-yellow"
 						/>
 						<a
-							href={link}
+							href={DOM.Link.url(link_url)}
 							class="relative z-30 block px-2 text-lg font-medium transition-colors font-body text-primary dark:text-white group-hover:text-green dark:group-hover:text-secondary"
-							>{title}</a
+							>{DOM.RichText.asText(link_title)}</a
 						>
 					</li>
 				{/each}
