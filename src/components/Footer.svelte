@@ -1,10 +1,15 @@
+<script lang="ts">
+	import Logo from './Logo.svelte';
+	import { theme } from '$stores/themeStore';
+</script>
+
 <div class="container mx-auto">
 	<div
 		class="flex flex-col items-center justify-between py-10 border-t sm:flex-row border-grey-lighter sm:py-12"
 	>
 		<div class="flex flex-col items-center mr-auto sm:flex-row">
 			<a href="index.html" class="mr-auto sm:mr-3">
-				<img src="assets/img/logo.svg" alt="logo" />
+				<Logo width="50px" fill={$theme === 'light' ? '' : 'white'} />
 			</a>
 			<p class="pt-5 font-light font-body text-primary dark:text-white sm:pt-0">
 				©2020 Henry Trianta.

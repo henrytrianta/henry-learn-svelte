@@ -1,4 +1,4 @@
-import Prismic from '@prismicio/client';
+import Prismic from 'prismic-javascript';
 
 const apiEndpoint = import.meta.env.VITE_PRISMIC_ENDPOINT.toString() || '';
 const accessToken = import.meta.env.VITE_PRISMIC_TOKEN.toString() || '';

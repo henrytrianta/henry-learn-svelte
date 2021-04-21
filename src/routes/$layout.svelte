@@ -44,7 +44,7 @@
 </script>
 
 <div
-	class={`dark:bg-primary transition-colors duration-500 ${
+	class={`dark:bg-primary transition-colors duration-500 min-h-screen ${
 		$menuOpen ? 'max-h-screen overflow-hidden relative' : ''
 	}`}
 >

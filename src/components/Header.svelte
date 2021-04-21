@@ -6,13 +6,15 @@
 	// props
 	export let menus;
 	import DOM from 'prismic-dom';
+	import linkResolver from '$lib/prismic/resolver';
+	import Logo from './Logo.svelte';
 </script>
 
 <div class="container mx-auto">
 	<div class="flex items-center justify-between py-6 lg:py-10">
 		<a href="/" class="flex items-center">
 			<span href="/" class="mr-2">
-				<img src="assets/img/logo.svg" alt="logo" />
+				<Logo width="100px" fill={$theme === 'light' ? '' : 'white'} />
 			</span>
 		</a>
 		<div class="flex items-center lg:hidden">
@@ -43,16 +45,16 @@
 		</div>
 		<div class="hidden lg:block">
 			<ul class="flex items-center">
-				{#each menus as { link_url, link_title }, i}
+				{#each menus as { link_url, link_label }, i}
 					<li class="relative mb-1 mr-6 group">
 						<div
 							id={`menu-${i}`}
-							class="absolute bottom-0 left-0 z-20 w-full h-0 transition-all opacity-75 group-hover:h-2 group-hover:bg-yellow"
+							class="absolute bottom-0 left-0 z-20 w-full h-0 transition-all opacity-75 group-hover:h-2 group-hover:bg-secondary"
 						/>
 						<a
-							href={DOM.Link.url(link_url)}
-							class="relative z-30 block px-2 text-lg font-medium transition-colors font-body text-primary dark:text-white group-hover:text-green dark:group-hover:text-secondary"
-							>{DOM.RichText.asText(link_title)}</a
+							href={linkResolver(link_url)}
+							class="relative z-30 block px-2 text-lg font-medium transition-colors font-body text-primary dark:text-white group-hover:text-primary-500 dark:group-hover:text-primary-500"
+							>{DOM.RichText.asText(link_label)}</a
 						>
 					</li>
 				{/each}
@@ -84,9 +86,12 @@
 			}}
 		/>
 		<ul class="flex flex-col mt-8">
-			{#each menus as { link, title }, i}
+			{#each menus as { link_url, link_label }, i}
 				<li class="">
-					<a href={link} class="block px-2 mb-3 text-lg font-medium text-white font-body">{title}</a
+					<a
+						href={linkResolver(link_url)}
+						class="block px-2 mb-3 text-lg font-medium text-white font-body"
+						>{DOM.RichText.asText(link_label)}</a
 					>
 				</li>
 			{/each}
