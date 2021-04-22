@@ -5,7 +5,8 @@
 	"type": "module",
 	"scripts": {
 		"dev": "svelte-kit dev",
-		"build": "svelte-kit build",
+		"build": "npm run routes && svelte-kit build",
+		"routes": "node ./utils/buildRoutes",
 		"start": "svelte-kit start -p 6969",
 		"lint": "prettier --check . && eslint --ignore-path .gitignore .",
 		"format": "prettier --write ."
@@ -22,6 +23,7 @@
 		"@typescript-eslint/parser": "^4.19.0",
 		"autoprefixer": "^10.2.5",
 		"cssnano": "^5.0.1",
+		"dotenv": "^8.2.0",
 		"eslint": "^7.22.0",
 		"eslint-config-prettier": "^8.1.0",
 		"eslint-plugin-svelte3": "^3.1.0",
