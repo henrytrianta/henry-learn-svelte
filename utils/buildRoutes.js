@@ -1,4 +1,4 @@
-import Prismic from 'prismic-javascript';
+import Prismic from '@prismicio/client';
 import path from 'path';
 import fs from 'fs';
 import { cwd } from 'process';

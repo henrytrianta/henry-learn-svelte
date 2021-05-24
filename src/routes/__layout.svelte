@@ -38,7 +38,9 @@
 
 	onMount(() => {
 		if ($theme === 'dark') {
-			window.document.body.classList.add('dark');
+			window.setTimeout(() => {
+				window.document.body.classList.add('dark');
+			}, 0);
 		}
 	});
 </script>

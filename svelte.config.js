@@ -1,22 +1,32 @@
-const sveltePreprocess = require('svelte-preprocess');
-// const node = require('@sveltejs/adapter-node');
-const static = require('@sveltejs/adapter-static');
-const pkg = require('./package.json');
+import sveltePreprocess from 'svelte-preprocess';
+
+// Prepare adapter
+// import node from '@sveltejs/adapter-node';
+import adapter from '@sveltejs/adapter-static';
+
 // Add resover to use absolute import
-const path = require('path');
+import path from 'path';
+
 // Add static path
-const staticPath = require('./utils/routelist.json');
+// TODO: fix static path
+// import route from path.resolve('./utils/routelist.js');
 
 /** @type {import('@sveltejs/kit').Config} */
-module.exports = {
+const config = {
 	// Consult https://github.com/sveltejs/svelte-preprocess
 	// for more information about preprocessors
-	preprocess: sveltePreprocess(),
+	preprocess: sveltePreprocess({ script: 'typescript', style: 'postcss' }),
 	kit: {
 		// By default, `npm run build` will create a standard Node app.
 		// You can create optimized builds for different platforms by
 		// specifying a different adapter
-		adapter: static({ output: './build' }),
+
+		// Adapter static
+		adapter: adapter({
+			pages: 'build',
+			assets: 'build',
+			fallback: null
+		}),
 
 		// hydrate the <div id="svelte"> element in src/app.html
 		target: '#henry-portofolio',
@@ -25,13 +35,10 @@ module.exports = {
 			crawl: true,
 			enabled: true,
 			force: true,
-			pages: [...staticPath]
+			pages: ['*']
 		},
 
 		vite: {
-			ssr: {
-				noExternal: Object.keys(pkg.dependencies || {})
-			},
 			// Start adding some resolver so we can use absolute import
 			resolve: {
 				alias: {
@@ -42,3 +49,5 @@ module.exports = {
 		}
 	}
 };
+
+export default config;
