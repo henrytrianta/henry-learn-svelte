@@ -11,9 +11,7 @@
 	// Icons
 	import IoMdMoon from 'svelte-icons/io/IoMdMoon.svelte';
 	import IoMdSunny from 'svelte-icons/io/IoMdSunny.svelte';
-	import IoIosMenu from 'svelte-icons/io/IoIosMenu.svelte';
 	import IoMdClose from 'svelte-icons/io/IoMdClose.svelte';
-
 </script>
 
 <div class="container mx-auto">
@@ -93,9 +91,9 @@
 		$menuOpen ? `opacity-100 pointer-events-auto` : ``
 	}`}
 >
-	<div class="w-full p-4 flex flex-col">
+	<div class="w-full p-4 flex items-center justify-center">
 		<div
-			class="absolute top-0 right-0 mt-4 mr-4 text-4xl text-white w-8"
+			class="absolute top-0 right-0 mt-6 mr-4 text-4xl text-white w-8"
 			on:click={() => {
 				toogleMenuOpen();
 			}}
@@ -108,6 +106,7 @@
 					<a
 						href={linkResolver(link_url)}
 						class="block py-4 text-4xl font-medium text-white font-body"
+						on:click={() => toogleMenuOpen()}
 					>
 						{DOM.RichText.asText(link_label)}
 					</a>

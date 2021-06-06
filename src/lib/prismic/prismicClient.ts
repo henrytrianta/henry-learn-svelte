@@ -10,3 +10,13 @@ export default prismicClient;
 export async function loadNav(): Promise<Record<string, unknown>> {
 	return prismicClient.getSingle('option', {}).then((option) => option.data.navigation);
 }
+
+export const fetchByDocType = async (
+	type: string,
+	options = {},
+  ): Promise<any> =>
+	prismicClient.query(Prismic.Predicates.at(`document.type`, type), options);
+  
+export async function getProjects(): Promise<Record<string, unknown>> {
+	return await fetchByDocType('project', {}).then((data) => data.results);
+}

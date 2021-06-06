@@ -7,13 +7,11 @@
 			}
 		};
 	}
-
 </script>
 
 <script>
 	export let error;
 	export let message;
-
 </script>
 
 <div class="container mx-auto">

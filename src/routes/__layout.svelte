@@ -20,7 +20,6 @@
 			}
 		};
 	}
-
 </script>
 
 <script type="ts">
@@ -47,7 +46,6 @@
 			}, 0);
 		}
 	});
-
 </script>
 
 <div
