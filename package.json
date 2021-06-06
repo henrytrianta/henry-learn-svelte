@@ -19,7 +19,7 @@
 		"@stnew/prismic-types": "^1.2.4",
 		"@sveltejs/adapter-node": "next",
 		"@sveltejs/adapter-static": "next",
-		"@sveltejs/adapter-vercel": "next",
+		"@sveltejs/adapter-vercel": "^1.0.0-next.22",
 		"@sveltejs/kit": "next",
 		"@sveltestack/svelte-query": "^1.4.1",
 		"@tailwindcss/jit": "^0.1.18",

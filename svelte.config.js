@@ -1,9 +1,9 @@
 import sveltePreprocess from 'svelte-preprocess';
 
 // Prepare adapter
-import node from '@sveltejs/adapter-node';
+// import node from '@sveltejs/adapter-node';
 // import static from '@sveltejs/adapter-static';
-// import vercel from '@sveltejs/adapter-vercel';
+import vercel from '@sveltejs/adapter-vercel';
 
 // Add resover to use absolute import
 import path from 'path';
@@ -33,7 +33,10 @@ const config = {
 		// }),
 
 		// Adapter node
-		adapter: node(),
+		// adapter: node(),
+
+		// Adapter vercel
+		adapter: vercel(),
 
 		// hydrate the <div id="svelte"> element in src/app.html
 		target: '#henry-portofolio',

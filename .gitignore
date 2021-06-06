@@ -7,3 +7,4 @@ node_modules
 .env
 .pnpm-debug.log
 /package
+/.vercel_build_output
