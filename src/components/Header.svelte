@@ -8,6 +8,12 @@
 	import DOM from 'prismic-dom';
 	import linkResolver from '$lib/prismic/resolver';
 	import Logo from './Logo.svelte';
+	// Icons
+	import IoMdMoon from 'svelte-icons/io/IoMdMoon.svelte';
+	import IoMdSunny from 'svelte-icons/io/IoMdSunny.svelte';
+	import IoIosMenu from 'svelte-icons/io/IoIosMenu.svelte';
+	import IoMdClose from 'svelte-icons/io/IoMdClose.svelte';
+
 </script>
 
 <div class="container mx-auto">
@@ -19,13 +25,17 @@
 		</a>
 		<div class="flex items-center lg:hidden">
 			<i
-				class={`bx text-3xl text-primary dark:text-white cursor-pointer mr-8 ${
-					$theme === 'light' ? 'bxs-sun' : 'bxs-moon'
-				}`}
+				class={`text-3xl text-primary dark:text-white cursor-pointer mr-8 w-8`}
 				on:click={() => {
 					toogleTheme();
 				}}
-			/>
+			>
+				{#if $theme === 'light'}
+					<IoMdMoon />
+				{:else}
+					<IoMdSunny />
+				{/if}
+			</i>
 
 			<svg
 				width="24"
@@ -54,19 +64,24 @@
 						<a
 							href={linkResolver(link_url)}
 							class="relative z-30 block px-2 text-lg font-medium transition-colors font-body text-primary dark:text-white group-hover:text-primary-500 dark:group-hover:text-primary-500"
-							>{DOM.RichText.asText(link_label)}</a
 						>
+							{DOM.RichText.asText(link_label)}
+						</a>
 					</li>
 				{/each}
 				<li>
-					<i
-						class={`bx text-3xl text-primary dark:text-white cursor-pointer ${
-							$theme === 'light' ? 'bxs-sun' : 'bxs-moon'
-						}`}
+					<div
+						class={`text-3xl text-primary dark:text-white cursor-pointer w-8`}
 						on:click={() => {
 							toogleTheme();
 						}}
-					/>
+					>
+						{#if $theme === 'light'}
+							<IoMdMoon />
+						{:else}
+							<IoMdSunny />
+						{/if}
+					</div>
 				</li>
 			</ul>
 		</div>
@@ -78,21 +93,24 @@
 		$menuOpen ? `opacity-100 pointer-events-auto` : ``
 	}`}
 >
-	<div class="w-2/3 p-4 ml-auto bg-green md:w-1/3">
-		<i
-			class="absolute top-0 right-0 mt-4 mr-4 text-4xl text-white bx bx-x"
+	<div class="w-full p-4 flex flex-col">
+		<div
+			class="absolute top-0 right-0 mt-4 mr-4 text-4xl text-white w-8"
 			on:click={() => {
 				toogleMenuOpen();
 			}}
-		/>
-		<ul class="flex flex-col mt-8">
+		>
+			<IoMdClose />
+		</div>
+		<ul class="justify-center text-center">
 			{#each menus as { link_url, link_label }, i}
-				<li class="">
+				<li>
 					<a
 						href={linkResolver(link_url)}
-						class="block px-2 mb-3 text-lg font-medium text-white font-body"
-						>{DOM.RichText.asText(link_label)}</a
+						class="block py-4 text-4xl font-medium text-white font-body"
 					>
+						{DOM.RichText.asText(link_label)}
+					</a>
 				</li>
 			{/each}
 		</ul>

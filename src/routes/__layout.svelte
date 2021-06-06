@@ -20,6 +20,7 @@
 			}
 		};
 	}
+
 </script>
 
 <script type="ts">
@@ -35,6 +36,9 @@
 	// component
 	import Header from '$components/Header.svelte';
 	import Footer from '$components/Footer.svelte';
+	// provider svelte query
+	import { QueryClient, QueryClientProvider } from '@sveltestack/svelte-query';
+	const queryClient = new QueryClient();
 
 	onMount(() => {
 		if ($theme === 'dark') {
@@ -43,6 +47,7 @@
 			}, 0);
 		}
 	});
+
 </script>
 
 <div
@@ -50,7 +55,9 @@
 		$menuOpen ? 'max-h-screen overflow-hidden relative' : ''
 	}`}
 >
-	<svelte:component this={Header} {menus} />
-	<slot />
-	<svelte:component this={Footer} />
+	<QueryClientProvider client={queryClient}>
+		<svelte:component this={Header} {menus} />
+		<slot />
+		<svelte:component this={Footer} />
+	</QueryClientProvider>
 </div>
