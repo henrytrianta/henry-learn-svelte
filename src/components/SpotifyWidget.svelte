@@ -2,7 +2,7 @@
 	import { useQuery } from '@sveltestack/svelte-query';
 
 	const queryResult = useQuery('spotify', async () => {
-		return fetch('http://localhost:3000/api/now-playing').then((res) => res.json());
+		return fetch('/api/now-playing').then((res) => res.json());
 	});
 </script>
 

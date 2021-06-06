@@ -1,7 +1,13 @@
+<script lang="ts" context="module">
+	// Declare variable to be use in global as hCaptcha initiated, to avoid ts error.
+	declare var hcaptcha: any;
+</script>
+
 <script lang="ts">
 	import { createForm } from 'felte';
 	import { validator } from '@felte/validator-yup';
 	import * as yup from 'yup';
+	import { toast } from '@zerodevx/svelte-toast';
 
 	import { onMount } from 'svelte';
 
@@ -13,7 +19,7 @@
 		email: yup.string().email().required(),
 		name: yup.string().required(),
 		message: yup.string().required(),
-		'g-recaptcha-response': yup.string().required()
+		'h-captcha-response': yup.string().required()
 	});
 
 	const { form, setField, errors } = createForm({
@@ -21,36 +27,84 @@
 		validateSchema: contactSchema,
 		onSubmit: async (data) => {
 			/* call to an api */
-			console.log(data);
-
-			// return;
+			// console.log(data);
 
 			await fetch('/api/form', {
 				method: 'post',
 				body: JSON.stringify(data)
 			})
 				.then((data) => data.json())
-				.then((data) => console.log(JSON.parse(data.body)));
+				.then((data) => {
+					console.log(data);
+
+					if (data.status === 200) {
+						console.log('Masuk');
+
+						toast.push('Success. We will get back to you :)', {
+							theme: {
+								'--toastBackground': '#48BB78',
+								'--toastProgressBackground': '#2F855A'
+							}
+						});
+					}
+
+					if (data.status === 500) {
+						toast.push('Error, something error on our end. Please refresh.', {
+							theme: {
+								'--toastBackground': '#F56565',
+								'--toastProgressBackground': '#C53030'
+							}
+						});
+					}
+
+					hcaptcha.reset();
+				});
 		}
 	});
 
 	onMount(() => {
-		// 	grecaptcha.render(captcha, {
-		// 		sitekey: import.meta.env.VITE_PRIVATE_GOOGLE_CAPTCHA_SITEKEY.toString(),
-		// 		callback: (token) => {
-		// 			// setField('captcha', token);
-		// 			setField('g-recaptcha-response', token);
-		// 		},
-		// 		'expired-callback': (token) => setField('g-recaptcha-response', token),
-		// 		'error-callback': (token) => setField('g-recaptcha-response', token)
-		// 	});
+		// Append hCaptcha Script
+		const loadhCaptcha = (callback) => {
+			const existingScript = document.getElementById('hCaptcha');
+
+			if (!existingScript) {
+				const script = document.createElement('script');
+				script.src = 'https://hcaptcha.com/1/api.js?recaptchacompat=off&render=explicit';
+				script.id = 'hCaptcha';
+				document.body.appendChild(script);
+
+				script.onload = () => {
+					if (callback) callback();
+				};
+			}
+
+			if (existingScript && callback) callback();
+		};
+
+		// Render hCaptcha
+		const injecthCaptcha = () => {
+			hcaptcha.render(captcha, {
+				theme: 'light',
+				sitekey: import.meta.env.VITE_HCAPTCHA_SITEKEY,
+				recaptchacompat: false,
+				callback: (token) => {
+					setField('h-captcha-response', token);
+				},
+				'expired-callback': (token) => {
+					setField('h-captcha-response', token);
+				},
+				'error-callback': (token) => {
+					setField('h-captcha-response', token);
+				}
+			});
+		};
+
+		// Run load and provide callback
+		loadhCaptcha(() => {
+			injecthCaptcha();
+		});
 	});
-
 </script>
-
-<svelte:head>
-	<script src="https://www.google.com/recaptcha/api.js" async defer></script>
-</svelte:head>
 
 <form use:form class="pt-16">
 	<div class="flex flex-col sm:flex-row">
@@ -102,10 +156,10 @@
 		/>
 	</div>
 	<div class="w-full pt-6 sm:pt-10">
-		<!-- <div bind:this={captcha} /> -->
-		<div class="g-recaptcha" data-sitekey="6LdJAtEZAAAAAFsPdP-jWzyC-sNHt9hlEx4D7kjA" />
-		<!-- <input type="hidden" name="captcha" value="" /> -->
-		<!-- TODO: Add an error message -->
+		<div bind:this={captcha} />
+		<span class="text-xs">
+			{$errors['h-captcha-response'] ? `*Please proof that you are not a bot.` : ''}
+		</span>
 	</div>
 	<button
 		class="mt-10 mb-12 block sm:inline-block px-10 py-4 bg-secondary transition-colors hover:bg-green font-body font-semibold text-white text-xl sm:text-2xl text-center sm:text-left"
