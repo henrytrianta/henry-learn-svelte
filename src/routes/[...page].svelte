@@ -41,6 +41,10 @@
 	import slicePrismic from '$lib/slice/slicePrismic';
 	// SEO
 	import SvelteSeo from 'svelte-seo';
+	// Toast
+	// This is strange, toast need to be here because rollup-plugin-dynamic-import-variables is fail to build on vite.js
+	import Toast from '$components/Toast.svelte';
+	import { dismissToast, toasts } from '$stores/toast';
 
 </script>
 
@@ -71,5 +75,32 @@
 	{/each}
 </div>
 
-<style>
+<!-- This is strange, toast need to be here because rollup-plugin-dynamic-import-variables is fail to build on vite.js -->
+
+{#if $toasts}
+	<section class="toast">
+		{#each $toasts as toast (toast.id)}
+			<Toast
+				type={toast.type}
+				dismissible={toast.dismissible}
+				on:dismiss={() => dismissToast(toast.id)}>{toast.message}</Toast
+			>
+		{/each}
+	</section>
+{/if}
+
+<style lang="postcss">
+	.toast {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		width: 100%;
+		display: flex;
+		margin-top: 1rem;
+		justify-content: center;
+		flex-direction: column;
+		z-index: 1000;
+	}
+
 </style>

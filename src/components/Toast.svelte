@@ -94,6 +94,6 @@
 	{/if}
 
 	{#if dismissible}
-		<button class="" on:click={() => dispatch('dismiss')}> X </button>
+		<button on:click={() => dispatch('dismiss')}> X </button>
 	{/if}
 </div>
