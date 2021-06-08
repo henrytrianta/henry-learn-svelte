@@ -8,9 +8,12 @@
 	import { createForm } from 'felte';
 	import { validator } from '@felte/validator-yup';
 	import * as yup from 'yup';
-	import { toast } from '@zerodevx/svelte-toast';
 
 	import { onMount } from 'svelte';
+
+	// Toast
+	import Toast from './Toast.svelte';
+	import { dismissToast, toasts, addToast } from '$stores/toast';
 
 	// Element captcha;
 	let captcha;
@@ -39,22 +42,20 @@
 					console.log(data);
 
 					if (data.status === 200) {
-						console.log('Masuk');
-
-						toast.push('Success. We will get back to you :)', {
-							theme: {
-								'--toastBackground': '#48BB78',
-								'--toastProgressBackground': '#2F855A'
-							}
+						addToast({
+							message: 'Thank you for your message.',
+							type: 'success',
+							dismissible: false,
+							timeout: 2000
 						});
 					}
 
 					if (data.status === 500) {
-						toast.push('Error, something error on our end. Please refresh.', {
-							theme: {
-								'--toastBackground': '#F56565',
-								'--toastProgressBackground': '#C53030'
-							}
+						addToast({
+							message: 'Error, please try again.',
+							type: 'error',
+							dismissible: false,
+							timeout: 2000
 						});
 					}
 
@@ -168,3 +169,31 @@
 		>Send Message</button
 	>
 </form>
+
+{#if $toasts}
+	<section class="toast">
+		{#each $toasts as toast (toast.id)}
+			<Toast
+				type={toast.type}
+				dismissible={toast.dismissible}
+				on:dismiss={() => dismissToast(toast.id)}>{toast.message}</Toast
+			>
+		{/each}
+	</section>
+{/if}
+
+<style lang="postcss">
+	.toast {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		width: 100%;
+		display: flex;
+		margin-top: 1rem;
+		justify-content: center;
+		flex-direction: column;
+		z-index: 1000;
+	}
+
+</style>
