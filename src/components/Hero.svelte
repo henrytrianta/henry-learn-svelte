@@ -3,13 +3,14 @@
 	import linkResolver from '$lib/prismic/resolver';
 	import DOM from 'prismic-dom';
 	import { is_empty } from 'svelte/internal';
+
 </script>
 
 {#if !is_empty(props)}
 	<div class="py-16 border-b border-grey-lighter lg:py-20">
-		{#if props.author_image.url}
+		{#if props.icon.url}
 			<div>
-				<img src={`${props.author_image.url}&w=64`} class="w-16 h-16 rounded-full" alt="author" />
+				<img src={`${props.icon.url}`} class="w-16 h-16 rounded-full" alt="author" />
 			</div>
 		{/if}
 		{#if DOM.RichText.asText(props.title)}

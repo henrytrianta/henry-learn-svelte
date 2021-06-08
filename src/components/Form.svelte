@@ -1,6 +1,7 @@
 <script lang="ts" context="module">
 	// Declare variable to be use in global as hCaptcha initiated, to avoid ts error.
 	declare var hcaptcha: any;
+
 </script>
 
 <script lang="ts">
@@ -104,6 +105,7 @@
 			injecthCaptcha();
 		});
 	});
+
 </script>
 
 <form use:form class="pt-16">
@@ -157,7 +159,7 @@
 	</div>
 	<div class="w-full pt-6 sm:pt-10">
 		<div bind:this={captcha} />
-		<span class="text-xs">
+		<span class="text-xs dark:text-white">
 			{$errors['h-captcha-response'] ? `*Please proof that you are not a bot.` : ''}
 		</span>
 	</div>

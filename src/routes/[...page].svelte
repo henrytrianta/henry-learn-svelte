@@ -31,6 +31,7 @@
 			}
 		};
 	}
+
 </script>
 
 <script lang="ts">
@@ -38,7 +39,27 @@
 	export let dataPrismic;
 	// Slice
 	import slicePrismic from '$lib/slice/slicePrismic';
+	// SEO
+	import SvelteSeo from 'svelte-seo';
+
 </script>
+
+<SvelteSeo
+	title={dataPrismic.data.meta_title}
+	description={dataPrismic.data.meta_title}
+	openGraph={{
+		title: dataPrismic.data.social_cards[0].social_card_title,
+		description: dataPrismic.data.social_cards[0].social_card_description,
+		images: [
+			{
+				url: dataPrismic.data.social_cards[0].social_card_image.url,
+				width: dataPrismic.data.social_cards[0].social_card_image.dimensions.height,
+				height: dataPrismic.data.social_cards[0].social_card_image.dimensions.height,
+				alt: dataPrismic.data.social_cards[0].social_card_image.alt
+			}
+		]
+	}}
+/>
 
 <div class="container mx-auto">
 	{#each dataPrismic.data.body as { slice_type, primary }}
