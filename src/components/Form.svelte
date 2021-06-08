@@ -113,7 +113,7 @@
 		<div class="w-full sm:w-1/2 sm:mr-3">
 			<label for="name" class="block font-body font-medium text-primary dark:text-white pb-3"
 				>Your Name
-				<span class="text-xs text-red-500">
+				<span class="text-xs text-red-500 dark:text-secondary">
 					{$errors.name ? `*${$errors.name}` : ''}
 				</span>
 			</label>
@@ -122,13 +122,13 @@
 				id="name"
 				name="name"
 				placeholder="What should I call you?"
-				class="w-full bg-grey-lightest px-5 py-4 font-body font-light text-primary dark:text-white placeholder-primary focus:outline-none focus:ring-2 focus:ring-secondary focus:border-secondary border border-primary transition-colors"
+				class="w-full bg-grey-lightest px-5 py-4 font-body font-light text-primary dark:text-white placeholder-primary focus:outline-none focus:ring-2 focus:ring-secondary focus:border-secondary border border-primary transition-colors dark:text-primary"
 			/>
 		</div>
 		<div class="w-full sm:w-1/2 sm:ml-3 pt-6 sm:pt-0">
 			<label for="email" class="block font-body font-medium text-primary dark:text-white pb-3"
 				>Email Address
-				<span class="text-xs text-red-500">
+				<span class="text-xs text-red-500 dark:text-secondary">
 					{$errors.email ? `*${$errors.email}` : ''}
 				</span>
 			</label>
@@ -137,14 +137,14 @@
 				id="email"
 				name="email"
 				placeholder="Drop that email here…"
-				class="w-full bg-grey-lightest px-5 py-4 font-body font-light text-primary dark:text-white placeholder-primary focus:outline-none focus:ring-2 focus:ring-secondary focus:border-secondary border border-primary transition-colors"
+				class="w-full bg-grey-lightest px-5 py-4 font-body font-light text-primary dark:text-white placeholder-primary focus:outline-none focus:ring-2 focus:ring-secondary focus:border-secondary border border-primary transition-colors dark:text-primary"
 			/>
 		</div>
 	</div>
 	<div class="w-full pt-6 sm:pt-10">
 		<label for="message" class="block font-body font-medium text-primary dark:text-white pb-3"
 			>Message
-			<span class="text-xs text-red-500">
+			<span class="text-xs text-red-500 dark:text-secondary">
 				{$errors.message ? `*${$errors.message}` : ''}
 			</span>
 		</label>
@@ -154,7 +154,7 @@
 			cols="30"
 			rows="9"
 			placeholder="Tell me all the things that you think I need to hear…"
-			class="w-full bg-grey-lightest px-5 py-4 font-body font-light text-primary dark:text-white placeholder-primary focus:outline-none focus:ring-2 focus:ring-secondary focus:border-secondary border border-primary transition-colors"
+			class="w-full bg-grey-lightest px-5 py-4 font-body font-light text-primary dark:text-white placeholder-primary focus:outline-none focus:ring-2 focus:ring-secondary focus:border-secondary border border-primary transition-colors dark:text-primary"
 		/>
 	</div>
 	<div class="w-full pt-6 sm:pt-10">
