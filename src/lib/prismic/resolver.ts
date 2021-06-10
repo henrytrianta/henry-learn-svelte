@@ -1,6 +1,10 @@
 import type { PrismicLink } from '@stnew/prismic-types';
 
 const linkResolver = (doc: PrismicLink): string => {
+	// if another type than Document
+	if (doc.link_type === 'Media' || doc.link_type === 'Web' || doc.link_type === 'Any')
+		return doc.url;
+
 	// Check if empty return null
 	if (!doc.type) return '/';
 	// Pretty URLs for known types

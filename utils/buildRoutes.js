@@ -48,7 +48,6 @@ const build = async () => {
 	 * Convert the docs into the related link for Svelte to render.
 	 */
 	let result = query.results.map(linkResolver);
-	console.log(query);
 
 	pages.push(...result);
 

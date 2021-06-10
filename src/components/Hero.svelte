@@ -10,7 +10,13 @@
 	<div class="py-16 border-b border-grey-lighter lg:py-20">
 		{#if props.icon.url}
 			<div>
-				<img src={`${props.icon.url}`} class="w-16 h-16 rounded-full" alt="author" />
+				<img
+					src={`${props.icon.url}`}
+					width="64px"
+					height="64px"
+					class="rounded-full"
+					alt="author"
+				/>
 			</div>
 		{/if}
 		{#if DOM.RichText.asText(props.title)}

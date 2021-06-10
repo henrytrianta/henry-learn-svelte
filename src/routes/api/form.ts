@@ -51,6 +51,8 @@ export const post = async (req): Promise<any> => {
 	// the `slug` parameter is available because this file
 	// is called [slug].json.js
 
+	if (req.headers['content-type'] != 'text/plain') return { body: { status: 500 } };
+
 	const data = JSON.parse(req.body);
 	const secret = import.meta.env.VITE_PRIVATE_HCAPTCHA_SECRETKEY.toString();
 	const token = data['h-captcha-response'];
@@ -58,15 +60,6 @@ export const post = async (req): Promise<any> => {
 	const hCaptchaVerify: any = await verify(secret, token)
 		.then((data) => data)
 		.catch(() => ({ success: false, error: console.error }));
-
-	// const debug = true;
-	// if (debug) {
-	// 	return {
-	// 		body: {
-	// 			hCaptchaVerify
-	// 		}
-	// 	};
-	// }
 
 	if (hCaptchaVerify && hCaptchaVerify.success) {
 		// put after captcha here
@@ -87,5 +80,11 @@ export const post = async (req): Promise<any> => {
 		body: {
 			status: 500
 		}
+	};
+};
+
+export const get = async (): Promise<any> => {
+	return {
+		body: 'Restricted'
 	};
 };
