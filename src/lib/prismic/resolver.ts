@@ -5,6 +5,11 @@ const linkResolver = (doc: PrismicLink): string => {
 	if (doc.link_type === 'Media' || doc.link_type === 'Web' || doc.link_type === 'Any')
 		return doc.url;
 
+	// Change homepage to /
+	if (doc.type === 'page' && doc.uid === 'homepage') {
+		return '/';
+	}
+
 	// Check if empty return null
 	if (!doc.type) return '/';
 	// Pretty URLs for known types
@@ -12,7 +17,7 @@ const linkResolver = (doc: PrismicLink): string => {
 	if (doc.type === 'page') return '/' + doc.uid;
 
 	// Fallback for other types, in case new custom types get created
-	return '/doc/' + doc.id;
+	return '/' + doc.id;
 };
 
 export const isLinkExternal = (doc: PrismicLink): string => {
