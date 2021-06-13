@@ -20,6 +20,7 @@
 			}
 		};
 	}
+
 </script>
 
 <script type="ts">
@@ -37,6 +38,7 @@
 	import Footer from '$components/Footer.svelte';
 	// provider svelte query
 	import { QueryClient, QueryClientProvider } from '@sveltestack/svelte-query';
+	import Gtm from '$components/GTM.svelte';
 	const queryClient = new QueryClient();
 
 	onMount(() => {
@@ -46,7 +48,10 @@
 			}, 0);
 		}
 	});
+
 </script>
+
+<Gtm gtmId="GTM-MGP5K7S" />
 
 <div
 	class={`dark:bg-primary transition-colors duration-500 min-h-screen ${
