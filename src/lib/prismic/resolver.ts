@@ -15,4 +15,10 @@ const linkResolver = (doc: PrismicLink): string => {
 	return '/doc/' + doc.id;
 };
 
+export const isLinkExternal = (doc: PrismicLink): string => {
+	if (doc.link_type === 'Web' && doc.target) return doc.target;
+
+	return '';
+};
+
 export default linkResolver;

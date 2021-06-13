@@ -6,12 +6,13 @@
 	// props
 	export let menus;
 	import DOM from 'prismic-dom';
-	import linkResolver from '$lib/prismic/resolver';
+	import linkResolver, { isLinkExternal } from '$lib/prismic/resolver';
 	import Logo from './Logo.svelte';
 	// Icons
 	import IoMdMoon from 'svelte-icons/io/IoMdMoon.svelte';
 	import IoMdSunny from 'svelte-icons/io/IoMdSunny.svelte';
 	import IoMdClose from 'svelte-icons/io/IoMdClose.svelte';
+
 </script>
 
 <div class="container mx-auto">
@@ -61,6 +62,7 @@
 						/>
 						<a
 							href={linkResolver(link_url)}
+							target={isLinkExternal(link_url)}
 							class="relative z-30 block px-2 text-lg font-medium transition-colors font-body text-primary dark:text-white group-hover:text-primary-500 dark:group-hover:text-primary-500"
 						>
 							{DOM.RichText.asText(link_label)}
@@ -105,6 +107,7 @@
 				<li>
 					<a
 						href={linkResolver(link_url)}
+						target={isLinkExternal(link_url)}
 						class="block py-4 text-4xl font-medium text-white font-body"
 						on:click={() => toogleMenuOpen()}
 					>
