@@ -60,7 +60,7 @@ const config = {
 				// exclude: ['@sveltestack/svelte-query'],
 				// include: ['detect-node', 'broadcast-channel']
 				// NOTE: Broadcast Channel that is used by Svelte Query need to be forced included.
-				include: ['broadcast-channel']
+				// include: ['broadcast-channel']
 			}
 			// build: {
 			// 	minify: true,

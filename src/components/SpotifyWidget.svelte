@@ -1,8 +1,11 @@
 <script lang="ts">
 	import { useQuery } from '@sveltestack/svelte-query';
+	import { browser } from '$app/env';
 
 	const queryResult = useQuery('spotify', async () => {
-		return fetch('/api/now-playing').then((res) => res.json());
+		return fetch(
+			`${browser ? window.location.origin : `http://localhost:3000`}/api/now-playing`
+		).then((res) => res.json());
 	});
 </script>
 
