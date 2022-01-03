@@ -1,3 +1,4 @@
+import svemix from 'vite-plugin-svemix';
 import sveltePreprocess from 'svelte-preprocess';
 
 // Prepare adapter
@@ -61,7 +62,7 @@ const config = {
 				// include: ['detect-node', 'broadcast-channel']
 				// NOTE: Broadcast Channel that is used by Svelte Query need to be forced included.
 				// include: ['broadcast-channel']
-			}
+			},
 			// build: {
 			// 	minify: true,
 			// 	rollupOptions: {
@@ -70,6 +71,7 @@ const config = {
 			// },
 			// plugins: [minifyHtml(true), analyze()]
 			// plugins: [minifyHtml(true)]
+			plugins: [svemix({})]
 		}
 	}
 };

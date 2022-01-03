@@ -1,16 +1,19 @@
 <script type="ts">
-	import { getProjects } from '$lib/prismic/prismicClient';
+	// import { getProjects } from '$lib/prismic/prismicClient';
 
-	import { useQuery } from '@sveltestack/svelte-query';
+	// import { useQuery } from '@sveltestack/svelte-query';
 
-	const projects = useQuery('projects', async () => {
-		return getProjects();
-	});
+	// const projects = useQuery('projects', async () => {
+	// 	return getProjects();
+	// });
 
 	import GoGitBranch from 'svelte-icons/go/GoGitBranch.svelte';
 	import MdKeyboardArrowRight from 'svelte-icons/md/MdKeyboardArrowRight.svelte';
-	import Skeleton from '$components/Skeleton.svelte';
-	import DOM from 'prismic-dom';
+	// import Skeleton from '$components/Skeleton.svelte';
+	import * as prismicH from '@prismicio/helpers';
+
+	export let props;
+	const { items } = props;
 </script>
 
 <div class="py-16 lg:py-20">
@@ -21,7 +24,28 @@
 		<h3 class="ml-3 text-2xl font-semibold font-body text-primary dark:text-white">My Projects</h3>
 	</div>
 	<div>
-		{#if $projects.isLoading}
+		{#each items as { project: { data } }}
+			<a
+				href={prismicH.asLink(data.link)}
+				class="flex items-center justify-between px-4 py-4 mb-6 border sm:px-6 border-grey-lighter"
+				target="_blank"
+			>
+				<span class="pr-8 w-9/10">
+					<h4 class="text-lg font-semibold font-body text-primary dark:text-white">
+						{prismicH.asText(data.title)}
+					</h4>
+					<p class="font-light font-body text-primary dark:text-white">
+						{prismicH.asText(data.description)}
+					</p>
+				</span>
+				<span class="w-1/10">
+					<div class="w-8 dark:text-white">
+						<MdKeyboardArrowRight />
+					</div>
+				</span>
+			</a>
+		{/each}
+		<!-- {#if $projects.isLoading}
 			<Skeleton height="86px" />
 			<div class="mb-6" />
 			<Skeleton height="86px" />
@@ -34,16 +58,16 @@
 		{:else}
 			{#each $projects.data as { data }}
 				<a
-					href={DOM.Link.url(data.link)}
+					href={prismicH.asLink(data.link)}
 					class="flex items-center justify-between px-4 py-4 mb-6 border sm:px-6 border-grey-lighter"
 					target="_blank"
 				>
 					<span class="pr-8 w-9/10">
 						<h4 class="text-lg font-semibold font-body text-primary dark:text-white">
-							{DOM.RichText.asText(data.title)}
+							{prismicH.asText(data.title)}
 						</h4>
 						<p class="font-light font-body text-primary dark:text-white">
-							{DOM.RichText.asText(data.description)}
+							{prismicH.asText(data.description)}
 						</p>
 					</span>
 					<span class="w-1/10">
@@ -53,6 +77,6 @@
 					</span>
 				</a>
 			{/each}
-		{/if}
+		{/if} -->
 	</div>
 </div>

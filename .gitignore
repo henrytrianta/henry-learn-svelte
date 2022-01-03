@@ -1,10 +1,8 @@
 .DS_Store
 node_modules
-/.svelte-kit
 /build
-/functions
-/https
-.env
-.pnpm-debug.log
+/.svelte-kit
 /package
-/.vercel_build_output
+.env
+/utils/routelist.json
+.vercel_build_output/

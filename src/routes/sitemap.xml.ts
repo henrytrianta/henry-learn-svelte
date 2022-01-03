@@ -1,16 +1,16 @@
 import prismicClient from '$lib/prismic/prismicClient';
 import linkResolver from '$lib/prismic/resolver';
-import Prismic from '@prismicio/client';
+import * as prismic from '@prismicio/client';
 
 /**
  * This is our build function. It contains the query.
  * It uses the link resolver to build the routes.
  */
 const build = async () => {
-	const query = await prismicClient.query([
-		Prismic.Predicates.at('document.type', 'page')
+	const query = await prismicClient.get({
+		predicates: prismic.predicates.at('document.type', 'page')
 		// Prismic.Predicates.at('document.type', 'blog')
-	]);
+	});
 
 	/**
 	 * Svelte uses the `*` to render the other pages that aren't dynamic

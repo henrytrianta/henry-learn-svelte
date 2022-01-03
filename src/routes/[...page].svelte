@@ -1,42 +1,76 @@
-<script context="module">
+<script context="module" ssr>
 	/**
 	 * @type {import('@sveltejs/kit').Load}
 	 */
 
 	import prismicClient from '$lib/prismic/prismicClient';
 
-	export async function load({
-		page: {
-			path,
-			params: { page }
-		}
-	}) {
+	export async function load({ params: { page } }) {
 		// If path root find homepage
-		if (path && path === '/') {
+		if (page === '') {
 			page = 'homepage';
 		}
 		// Fetch data
-		const dataPrismic = await prismicClient.getByUID('page', page, {});
+		try {
+			const graphQuery = `
+			{
+				page {
+					body {
+						...on myproject {
+							repeat {
+								project {
+									...on project {
+										title
+										description
+										link
+									}
+								}
+							}
+						}
+						...on hero {
+							non-repeat {
+								...non-repeatFields
+							}
+							repeat {
+								...repeatFields
+							}
+						}
+						...on form {
+							non-repeat {
+								...non-repeatFields
+							}
+							repeat {
+								...repeatFields
+							}
+						}
+					}
+					meta_title
+					meta_description
+					social_cards
+				}
+			}
+			`;
+			const { data } = await prismicClient.getByUID('page', page, {
+				graphQuery
+			});
 
-		if (!dataPrismic) {
 			return {
-				status: 503,
-				error: new Error(`Could not load ${page} on ${path}`)
+				props: {
+					data
+				}
+			};
+		} catch (error) {
+			return {
+				status: 404,
+				error: new Error(`Not found.`)
 			};
 		}
-
-		return {
-			props: {
-				dataPrismic
-			}
-		};
 	}
-
 </script>
 
 <script lang="ts">
 	// Data
-	export let dataPrismic;
+	export let data;
 	// Slice
 	import slicePrismic from '$lib/slice/slicePrismic';
 	// SEO
@@ -45,35 +79,36 @@
 	// This is strange, toast need to be here because rollup-plugin-dynamic-import-variables is fail to build on vite.js
 	import Toast from '$components/Toast.svelte';
 	import { dismissToast, toasts } from '$stores/toast';
-
 </script>
 
 <SvelteSeo
-	title={dataPrismic.data.meta_title}
-	description={dataPrismic.data.meta_title}
+	title={data.meta_title}
+	description={data.meta_description}
 	openGraph={{
-		title: dataPrismic.data.social_cards[0].social_card_title,
-		description: dataPrismic.data.social_cards[0].social_card_description,
+		title: data.social_cards[0].social_card_title,
+		description: data.social_cards[0].social_card_description,
 		images: [
 			{
-				url: dataPrismic.data.social_cards[0].social_card_image.url,
-				width: dataPrismic.data.social_cards[0].social_card_image.dimensions.height,
-				height: dataPrismic.data.social_cards[0].social_card_image.dimensions.height,
-				alt: dataPrismic.data.social_cards[0].social_card_image.alt
+				url: data.social_cards[0].social_card_image.url,
+				width: data.social_cards[0].social_card_image.dimensions.height,
+				height: data.social_cards[0].social_card_image.dimensions.height,
+				alt: data.social_cards[0].social_card_image.alt
 			}
 		]
 	}}
 />
 
-<div class="container mx-auto">
-	{#each dataPrismic.data.body as { slice_type, primary }}
-		{#each slicePrismic as { slice, component }}
-			{#if slice === slice_type}
-				<svelte:component this={component} props={primary} />
-			{/if}
+{#if data}
+	<div class="container mx-auto">
+		{#each data.body as { slice_type, ...rest }}
+			{#each slicePrismic as { slice, component }}
+				{#if slice === slice_type}
+					<svelte:component this={component} props={rest} />
+				{/if}
+			{/each}
 		{/each}
-	{/each}
-</div>
+	</div>
+{/if}
 
 <!-- This is strange, toast need to be here because rollup-plugin-dynamic-import-variables is fail to build on vite.js -->
 
@@ -102,5 +137,4 @@
 		flex-direction: column;
 		z-index: 1000;
 	}
-
 </style>

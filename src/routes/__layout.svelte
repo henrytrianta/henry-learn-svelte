@@ -1,4 +1,4 @@
-<script context="module">
+<script context="module" ssr>
 	/**
 	 * @type {import('@sveltejs/kit').Load}
 	 */
@@ -20,7 +20,6 @@
 			}
 		};
 	}
-
 </script>
 
 <script type="ts">
@@ -48,7 +47,6 @@
 			}, 0);
 		}
 	});
-
 </script>
 
 <Gtm gtmId="GTM-MGP5K7S" />
