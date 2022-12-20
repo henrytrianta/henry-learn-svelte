@@ -22,13 +22,14 @@
 
 <div class="container mx-auto">
 	<div class="flex items-center justify-between py-6 lg:py-10">
-		<a href="/" class="flex items-center">
-			<span href="/" class="mr-2 text-primary dark:text-white text-[100px]">
+		<a href="/" class="flex items-center" aria-label="Go to homepage">
+			<span class="mr-2 text-primary dark:text-white text-[100px]">
 				<Logo />
 			</span>
 		</a>
 		<div class="flex items-center lg:hidden">
 			<button
+				aria-label="Theme button"
 				class={`text-3xl text-primary dark:text-white cursor-pointer mr-4 w-8`}
 				on:click={() => {
 					toogleTheme();
@@ -42,6 +43,7 @@
 			</button>
 
 			<button
+				aria-label="Menu button"
 				on:click={() => {
 					toogleMenuOpen();
 				}}
@@ -69,6 +71,7 @@
 				{/each}
 				<li>
 					<button
+						aria-label="Theme button"
 						class={`text-3xl text-primary dark:text-white cursor-pointer w-8`}
 						on:click={() => {
 							toogleTheme();
@@ -93,6 +96,7 @@
 >
 	<div class="w-full p-4 flex items-center justify-center">
 		<button
+			aria-label="Close button"
 			class="absolute top-0 right-0 mt-6 mr-4 text-4xl text-white w-8"
 			on:click={() => {
 				toogleMenuOpen();

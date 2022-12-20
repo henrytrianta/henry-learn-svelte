@@ -9,14 +9,17 @@
 	const datas = [
 		{
 			link: 'https://github.com/henrytrianta',
+			label: 'See henrytrianta Github',
 			logo: LogoGithub
 		},
 		{
 			link: 'https://www.linkedin.com/in/henrytrianta',
+			label: 'See henrytrianta LinkedIn',
 			logo: LogoLinkedIn
 		},
 		{
 			link: 'https://instagram.com/henrytrianta',
+			label: 'See henrytrianta Instagram',
 			logo: LogoInstagram
 		}
 	];
@@ -36,7 +39,11 @@
 		class="flex flex-col sm:flex-row justify-between items-center border-t border-grey-lighter py-10 sm:py-12"
 	>
 		<div class="flex flex-col sm:flex-row items-center mr-auto">
-			<a href="/" class="mr-auto sm:mr-6 text-primary dark:text-white text-[69px]">
+			<a
+				href="/"
+				class="mr-auto sm:mr-6 text-primary dark:text-white text-[69px]"
+				aria-label="Go to homepage"
+			>
 				<Logo />
 			</a>
 			<p class="font-body font-light text-primary dark:text-white pt-5 sm:pt-0 text-sm">
@@ -44,10 +51,10 @@
 			</p>
 		</div>
 		<div class="flex items-center pt-5 sm:pt-0 mr-auto sm:mr-0">
-			{#each datas as { link, logo }}
-				<a href={link} target="_blank" rel="noreferrer">
+			{#each datas as { link, logo, label }}
+				<a href={link} target="_blank" rel="noreferrer" aria-label={label}>
 					<div
-						class="pl-2 text-2xl transition-colors text-primary dark:text-white hover:text-secondary dark:hover:text-secondary"
+						class="pl-4 text-3xl transition-colors text-primary dark:text-white hover:text-secondary dark:hover:text-secondary"
 					>
 						<svelte:component this={logo} />
 					</div>

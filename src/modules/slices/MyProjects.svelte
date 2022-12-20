@@ -12,7 +12,9 @@
 		<div class="text-[18px] dark:text-white">
 			<LogoBranch />
 		</div>
-		<h3 class="ml-3 text-2xl font-semibold font-body text-primary dark:text-white">My Projects</h3>
+		<div class="ml-3 text-2xl font-semibold font-body text-primary dark:text-white">
+			My Projects
+		</div>
 	</div>
 	<div>
 		{#each items as { project: { data } }}
